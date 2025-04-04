@@ -1,0 +1,52 @@
+﻿@model Session
+
+<form method="post" asp-controller="Planning" asp-action="AddSession">
+    <div class="add-page-body-container" style="margin-top: -4%;">
+        <div class="error-text" asp-validation-summary="All"></div>
+        <div class="add-page-title">
+            CRÉATION DE SÉANCE
+        </div>
+        <input type="hidden" asp-for="UserId" value="@ViewBag.UserId" />
+        <select class="session-add-page-patient-selection" asp-for="PatientId">
+            <option value="@null" selected>Choisissez un patient...</option>
+            @foreach (Patient patient in ViewBag.Patients)
+            {
+                <option value="@patient.Id">
+                    @patient.FirstName @patient.Name
+                </option>
+            }
+        </select>
+        <input class="add-page-input" type="text" placeholder="Titre" asp-for="Title" />
+        <textarea class="add-page-text-area-input" placeholder="Programme" asp-for="PreparationInformation"></textarea>
+        <input type="hidden" value="@null" asp-for="ProgressInformation" />
+        <div class="session-add-page-date-elements-line">
+            <div></div>
+            <input type="datetime-local" class="session-add-page-date-input" asp-for="StartDate" />
+            @{
+                if (ViewBag.EndDateWanted)
+                {
+                    <img class="session-add-page-separation-arrow-image" src="~/images/start-and-end-dates-separation-arrow.png" />
+                    <input type="datetime-local" class="session-add-page-date-input" asp-for="EndDate" />
+                }
+                else
+                {
+                    <input type="hidden" value="@null" asp-for="EndDate" />
+                    <div></div>
+                }
+            }
+            <div></div>
+            <button type="submit" form="TriggerEndDatePresenceButton" class="session-modification-end-date-trigger-button">
+                @(ViewBag.EndDateWanted ? "SUPPRIMER DATE DE FIN" : "AJOUTER DATE DE FIN")
+            </button>
+        </div>
+        <input type="hidden" name="endDatePresent" value="@ViewBag.EndDateWanted.ToString()" />
+        <button type="submit" class="add-page-add-button">
+            AJOUTER
+        </button>
+    </div>
+</form>
+
+<form method="get" id="TriggerEndDatePresenceButton" asp-controller="Planning" asp-action="TriggerEndDatePresence">
+    <input type="hidden" name="endDatePresent" value="@ViewBag.EndDateWanted.ToString()" />
+    <input type="hidden" name="actionType" value="@ViewBag.Action" />
+</form>

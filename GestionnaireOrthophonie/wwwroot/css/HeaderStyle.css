@@ -1,0 +1,56 @@
+﻿:root {
+    --header-background-color: rgb(9, 142, 97);
+}
+
+.header-container {
+    background-color: var(--header-background-color);
+    border-radius: 5px;
+    margin: 1% 12% 0% 12%;
+    padding: 1px 0vw 1px 4vw;
+    display: grid;
+    grid-template-columns: 8vw 8vw 8vw 1vw;
+    grid-column-gap: 4vw;
+}
+
+.header-button {
+    background-color: var(--header-background-color);
+    font-family: Arial;
+    font-size: 1.2vw;
+    text-align: center;
+    color: rgb(2, 36, 25);
+    text-decoration: none;
+    border: none;
+    padding: 1.75vh 1.5vw 1.75vh 1.5vw;
+    transition: text-decoration 0.2s color 0.2s;
+}
+
+    .header-button:hover {
+        color: white;
+        text-decoration: underline;
+    }
+
+.central-background-image {
+    width: 70%;
+    height: 100%;
+    position: fixed;
+    margin: -1% 15% 0% 15%;
+    z-index: -1;
+}
+
+.left-side-background-image {
+    height: 100%;
+    z-index: -2;
+    position: fixed;
+    margin: -1% 75% 0% -1%;
+}
+
+.right-side-background-image {
+    height: 100%;
+    z-index: -2;
+    position: fixed;
+    margin: -1% -1% 0% 75%;
+}
+
+.disconnexion-button-left-margin {
+    margin-left: 22vw;
+}

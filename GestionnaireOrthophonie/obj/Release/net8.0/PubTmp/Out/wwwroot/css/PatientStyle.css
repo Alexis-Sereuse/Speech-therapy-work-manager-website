@@ -1,0 +1,196 @@
+﻿/* OVERVIEW ELEMENTS STYLES */
+:root {
+    --overview-container-background-color: rgb(56, 79, 83);
+    --overview-container-recurrent-right-margin: 30px;
+}
+
+
+.patient-overview-container {
+    background-color: var(--overview-container-background-color);
+    margin: 1% 18% 1% 18%;
+    padding: 15px;
+    display: grid;
+    grid-template-columns: 95% 5%;
+    border-radius: 15px;
+    box-shadow: rgb(0, 0, 0, 0.5) 3px;
+}
+
+.patient-overview-name {
+    font-size: 40px;
+    color: white;
+    font-weight: bold;
+    margin-right: var(--overview-container-recurrent-right-margin);
+}
+
+.patient-overview-age {
+    font-size: 30px;
+    color: white;
+    font-weight: normal;
+    margin: 10px var(--overview-container-recurrent-right-margin) 0px 0px;
+}
+
+.patient-overview-gender {
+    font-size: 30px;
+    color: white;
+    font-weight: normal;
+    font-style: italic;
+    margin: 10px var(--overview-container-recurrent-right-margin) 0px 0px;
+}
+
+.patient-card-acess_button {
+    background-color: transparent;
+    border: solid;
+    border-width: 1px;
+    border-color: white;
+    border-radius: 15px;
+    padding: 5px 10px 2px 10px;
+    margin: 5.5px 20px 0px -20px;
+    color: white;
+    font-size: 25px;
+    transition: background-color 0.2s color 0.2s;
+}
+
+    .patient-card-acess_button:hover {
+        background-color: white;
+        color: var(--overview-container-background-color);
+    }
+
+.patient-overview-add-button {
+    background-color: transparent;
+    border: solid;
+    border-width: 2px;
+    border-color: var(--overview-container-background-color);
+    border-radius: 15px;
+    padding: 5px 10px 2px 10px;
+    margin: 2% 0% 2% 16%;
+    color: var(--overview-container-background-color);
+    font-size: 25px;
+    transition: background-color 0.2s color 0.2s border-color 0.2s;
+}
+
+    .patient-overview-add-button:hover {
+        border-color: white;
+        background-color: var(--overview-container-background-color);
+        color: white;
+    }
+
+/* INDIVIDUAL CARD ELEMENTS STYLES */
+
+.patient-card-body-vertical-layout {
+    width: 70%;
+    margin: 2% 15% 0% 15.4%;
+    display: grid;
+    grid-template-rows: 0fr 1fr 1fr 1fr;
+}
+
+.patient-card-body-horizontal-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0% 2% 4% 2%;
+}
+
+.patient-card-profile-block {
+    margin: 0% 0% 0% 15%;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    align-items: center;
+}
+
+.patient-card-full-name-text {
+    font-size: 50px;
+    font-weight: bold;
+    margin: 0% 0% 1% 0%;
+}
+
+.patient-card-gender-text {
+    font-size: 30px;
+    font-style: italic;
+    color: rgba(0,0,0,0.6);
+    margin: -12% 0% 0% 0%;
+}
+
+.patient-card-age-text {
+    font-size: 30px;
+    color: rgba(0,0,0,0.6);
+    margin: -3% 0% 0% 0%;
+}
+
+.patient-card-label {
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.patient-card-text-block {
+    padding: 1% 5% 0% 2%;
+}
+
+.patient-card-body-text {
+    font-size: 20px;
+    white-space: pre-wrap;
+}
+
+.patient-card-action-buttons-container {
+    margin-bottom: 3%;
+    display: grid;
+    grid-template-columns: 1fr 8fr 1fr;
+    padding: 0% 1% 0% 1%;
+}
+
+/* ADD PAGE ELEMENTS STYLES */
+
+.patient-add-page-gender-selection {
+    justify-self: center;
+    margin: 0% 46% 2% 46%;
+    width: 8%;
+    height: 30px;
+    font-size: 20px;
+}
+
+/* MODIFICATION PAGE ELEMENTS STYLES */
+
+.modify-card-profile-text-inputs-container {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 4fr;
+    row-gap: 7%;
+    padding: 7% 0% 0% 20%;
+}
+
+.modify-card-profile-text-input {
+    font-size: 20px;
+    margin: 0% 0% 0% 0%;
+    width: 40%;
+}
+
+.modify-card-text-area {
+    font-size: 15px;
+    width: 100%;
+    height: 300px;
+    font-family: Arial;
+}
+
+.modify-card-gender-selection {
+    margin-left:10%;
+    width: 20%;
+    font-size: 20px;
+}
+
+.modify-card-save-modifications-button {
+    height: 30px;
+    margin-left: 33%;
+    margin-right: 33%;
+    font-size: 20px;
+    border-radius: 15px;
+    color: forestgreen;
+    border: solid;
+    border-color: forestgreen;
+    border-width: 2px;
+    background-color: transparent;
+    transition: color 0.2s border-color 0.2s background-color 0.2s;
+}
+
+    .modify-card-save-modifications-button:hover {
+        color: white;
+        border-color: white;
+        background-color: forestgreen;
+    }

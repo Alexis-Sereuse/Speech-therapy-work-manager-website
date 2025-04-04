@@ -1,0 +1,130 @@
+﻿@model Session
+
+<form method="post" asp-controller="Planning" asp-action="ModifySession">
+    <div class="session-view-container">
+        <div class="error-text" asp-validation-summary="All"></div>
+
+        @{
+            if (ViewBag.Action == "Displaying")
+            {
+                <div class="session-view-header-buttons-container">
+                    <button class="header-delete-button" type="submit" form="DeleteAction">SUPPRIMER</button>
+                    <div></div>
+                    <button class="header-modify-button" type="submit" form="ModifyAction">MODIFIER</button>
+                </div>
+                <span class="session-view-patient-full-name">@Model.Patient.FirstName @Model.Patient.Name</span>
+                <span class="session-view-title">@Model.Title</span>
+            }
+            else
+            {
+                <input type="hidden" asp-for="Id" value="@Model.Id" />
+                <input type="hidden" asp-for="UserId" value="@Model.UserId" />
+                <select class="session-add-page-patient-selection" asp-for="PatientId">
+                    @foreach (Patient patient in ViewBag.Patients)
+                    {
+                        if (patient.Id == Model.PatientId)
+                        {
+                            <option value="@patient.Id" selected>@patient.FirstName @patient.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@patient.Id">@patient.FirstName @patient.Name</option>
+                        }
+                    }
+                </select>
+                <input type="text" class="add-page-input" asp-for="Title" value="@Model.Title" />
+            }
+        }
+        <div class="session-view-dates-elements-container">
+            @{
+                if (ViewBag.Action == "Displaying")
+                {
+                    <span class="session-view-date-element">@Model.StartDate</span>
+                    @if (Model.EndDate != null)
+                    {
+                        <img class="session-view-dates-separation-image" src="~/images/start-and-end-dates-separation-arrow.png" />
+                        <span class="session-view-date-element">@Model.EndDate</span>
+                    }
+                }
+                else
+                {
+                    string startDateTime = Model.StartDate.ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T');
+
+                    <input type="datetime-local" class="session-modification-date-input" asp-for="StartDate" value="@startDateTime" />
+                    if (ViewBag.EndDateWanted)
+                    {
+                        string endDateTime = (Model.EndDate == null ? "" : ((DateTime)Model.EndDate).ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T'));
+
+                        <img class="session-view-dates-separation-image" src="~/images/start-and-end-dates-separation-arrow.png" />
+                        <input type="datetime-local" class="session-modification-date-input" asp-for="EndDate" value="@endDateTime"/>
+                    }
+                    else
+                    {
+                        <input type="hidden" asp-for="EndDate" value="@null" />
+                    }
+                    <button form="TriggerEndDatePresence" type="submit" class="session-modification-end-date-trigger-button">@(ViewBag.EndDateWanted ? "SUPPRIMER DATE DE FIN" : "AJOUTER DATE DE FIN")</button>
+                }
+            }
+        </div>
+        <div class="session-view-paragraphs-container">
+            <div class="session-view-paragraph">
+                <span class="session-view-paragraph-header">Programme :</span>
+                @{
+                    if (ViewBag.Action == "Displaying")
+                    {
+                        <span class="session-view-paragraph-body">@Model.PreparationInformation</span>
+                    }
+                    else
+                    {
+                        <textarea class="session-modification-text-area-input" asp-for="PreparationInformation">@Model.PreparationInformation</textarea>
+                    }
+                }
+            </div>
+            <div class="session-view-paragraph">
+                <span class="session-view-paragraph-header">Progression :</span>
+                @{
+                    if (ViewBag.Action == "Displaying")
+                    {
+                        <span class="session-view-paragraph-body">@Model.ProgressInformation</span>
+                    }
+                    else
+                    {
+                        <textarea class="session-modification-text-area-input" asp-for="ProgressInformation">@Model.ProgressInformation</textarea>
+                    }
+                }
+            </div>
+        </div>
+        @if (ViewBag.Action == "Modifying")
+        {
+            <input type="hidden" name="endDateWanted" value="@ViewBag.EndDateWanted.ToString()" />
+            <button type="submit" class="session-modification-modify-button">MODIFIER</button>
+        }
+    </div>
+</form>
+
+@{
+    if (ViewBag.Action == "Displaying")
+    {
+        <form id="DeleteAction" method="get" asp-controller="Planning" asp-action="DeleteSession">
+            <input type="hidden" name="sessionId" value="@Model.Id" />
+        </form>
+
+        <form id="ModifyAction" method="get" asp-controller="Planning" asp-action="GetSessionModificationView">
+            <input type="hidden" name="sessionId" value="@Model.Id" />
+        </form>
+    }
+    else
+    {
+        <form method="get" id="TriggerEndDatePresence" asp-controller="Planning" asp-action="TriggerEndDatePresence">
+            <input type="hidden" name="endDatePresent" value="@ViewBag.EndDateWanted.ToString()" />
+            <input type="hidden" name="actionType" value="@ViewBag.Action" />
+            <input type="hidden" name="sessionId" value="@Model.Id" />
+            <input type="hidden" name="startDate" value="@Model.StartDate" />
+            <input type="hidden" name="endDate" value="@Model.EndDate" />
+            <input type="hidden" name="title" value="@Model.Title" />
+            <input type="hidden" name="preparationInformation" value="@Model.PreparationInformation" />
+            <input type="hidden" name="progressInformation" value="@Model.ProgressInformation" />
+            <input type="hidden" name="patientId" value="@Model.PatientId" />
+        </form>
+    }
+}

@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+
+@inject SignInManager<IdentityUser> SignInManager;
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Gestionnaire de Travail Orthophonie</title>
+    <link rel="stylesheet" href="~/css/HeaderStyle.css" />
+    <link rel="stylesheet" href="~/css/PatientStyle.css" />
+    <link rel="stylesheet" href="~/css/GeneralStyle.css" />
+    <link rel="stylesheet" href="~/css/PlanningStyle.css" />
+    <link rel="stylesheet" href="~/css/SessionStyle.css" />
+    @RenderSection("AdditionnalStyles", false)
+</head>
+<body>
+    <div>
+        <img class="central-background-image" src="~/images/central_background.jpg">
+        <img class="left-side-background-image" src="~/images/side_background.jpg">
+        <img class="right-side-background-image" src="~/images/side_background.jpg">
+    </div>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="header-container">
+            <form asp-controller="Home" asp-action="Index">
+                <button class="header-button">
+                    Accueil
+                </button>
+            </form>
+
+            <form asp-controller="Home" asp-action="DisplayPatientsInformation">
+                <button class="header-button">
+                    Patients
+                </button>
+            </form>
+
+            <form asp-controller="Home" asp-action="GetCurrentPeriodView">
+                <button class="header-button">
+                    Planning
+                </button>
+            </form>
+
+            <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="header-button disconnexion-button-left-margin">Déconnexion</button>
+            </form>
+
+        </div>
+    }
+    else
+    {
+        <div class="header-container">
+            <form asp-area="Identity" asp-page="/Account/Login">
+                <button class="header-button">
+                    Connexion
+                </button>
+            </form>
+            <form asp-area="Identity" asp-page="/Account/Register">
+                <button class="header-button">
+                    Enregistrement
+                </button>
+            </form>
+        </div>
+    }
+    @RenderBody();
+</body>
+</html>
+
+@RenderSection("Scripts", false)

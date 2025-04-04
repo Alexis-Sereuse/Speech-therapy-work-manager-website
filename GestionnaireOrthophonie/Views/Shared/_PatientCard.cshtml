@@ -1,0 +1,176 @@
+﻿@model Patient
+
+@{
+    string displayingActionName = "Displaying";
+    string modifyingActionName = "Modifying";
+}
+
+<div class="patient-card-body-vertical-layout">
+    @if (ViewBag.Action == displayingActionName)
+    {
+        <div class="patient-card-action-buttons-container">
+            <form method="get" asp-controller="Patients" asp-action="DeletePatient">
+                <input type="hidden" name="patientId" value="@Model.Id" />
+                <button class="header-delete-button" type="submit">
+                    SUPPRIMER
+                </button>
+            </form>
+            <div></div>
+            <form method="get" asp-controller="Patients" asp-action="ModifyPatientSection">
+                <input type="hidden" name="patientId" value="@Model.Id" />
+                <button class="header-modify-button" type="submit">
+                    MODIFIER
+                </button>
+            </form>
+        </div>
+    }
+    <form asp-controller="Patients" asp-action="ApplyModifications" method="post">
+        <div class="error-text" style="margin:0% 35% 5%;" asp-validation-summary="All"></div>
+
+        @{
+            string profileBlockClassName = ViewBag.Action == displayingActionName ? "patient-card-profile-block" : "modify-card-profile-text-inputs-container";
+        }
+
+        <div class="patient-card-body-horizontal-layout">
+            <div class="@profileBlockClassName">
+                @{
+                    if (ViewBag.Action == modifyingActionName)
+                    {
+                        <input type="hidden" asp-for="Id" value="@Model.Id" />
+                        <input type="hidden" asp-for="UserId" value="@Model.UserId" />
+                        <input class="modify-card-profile-text-input" type="text" asp-for="FirstName" value="@Model.FirstName" />
+                        <input class="modify-card-profile-text-input" type="text" asp-for="Name" value="@Model.Name" />
+                    }
+                    else
+                    {
+                        <span class="patient-card-full-name-text">@Model.FirstName @Model.Name</span>
+                    }
+                }
+                @{
+                    if (ViewBag.Action == modifyingActionName)
+                    {
+                        <input class="modify-card-profile-text-input" type="text" asp-for="Age" value="@Model.Age" />
+                    }
+                    else
+                    {
+                        <span class="patient-card-age-text">@Model.Age ans</span>
+                    }
+                }
+                @{
+                    if (ViewBag.Action == modifyingActionName)
+                    {
+                        <select asp-for="Gender" class="modify-card-gender-selection">
+                            <option selected value="@null">Sexe</option>
+                            <option value="Homme">Homme</option>
+                            <option value="Femme">Femme</option>
+                        </select>
+                    }
+                    else
+                    {
+                        <span class="patient-card-gender-text">@Model.Gender</span>
+                    }
+                }
+            </div>
+            <div>
+                <span class="patient-card-label">
+                    Objectif(s) thérapeutique(s)
+                </span>
+                <br />
+                <div class="patient-card-text-block">
+                    @{
+                        if (ViewBag.Action == modifyingActionName)
+                        {
+                            <textarea class="modify-card-text-area" asp-for="TherapeuticObjectives" value="@Model.TherapeuticObjectives"></textarea>
+                        }
+                        else
+                        {
+                            <span class="patient-card-body-text">@Model.TherapeuticObjectives</span>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="patient-card-body-horizontal-layout">
+            <div>
+                <span class="patient-card-label">
+                    Anamnèse
+                </span>
+                <br />
+                <div class="patient-card-text-block">
+                    @{
+                        if (ViewBag.Action == modifyingActionName)
+                        {
+                            <textarea class="modify-card-text-area" asp-for="Anamnesis" value="@Model.Anamnesis"></textarea>
+                        }
+                        else
+                        {
+                            <span class="patient-card-body-text">@Model.Anamnesis</span>
+                        }
+                    }
+                </div>
+            </div>
+            <div>
+                <span class="patient-card-label">
+                    Pathologie(s)
+                </span>
+                <br />
+                <div class="patient-card-text-block">
+                    @{
+                        if (ViewBag.Action == modifyingActionName)
+                        {
+                            <textarea class="modify-card-text-area" asp-for="Pathologies" value="@Model.Pathologies"></textarea>
+                        }
+                        else
+                        {
+                            <span class="patient-card-body-text">@Model.Pathologies</span>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="patient-card-body-horizontal-layout">
+            <div>
+                <span class="patient-card-label">
+                    Progrès
+                </span>
+                <br />
+                <div class="patient-card-text-block">
+                    @{
+                        if (ViewBag.Action == modifyingActionName)
+                        {
+                            <textarea class="modify-card-text-area" asp-for="Progress" value="@Model.Progress"></textarea>
+                        }
+                        else
+                        {
+                            <span class="patient-card-body-text">@Model.Progress</span>
+                        }
+                    }
+                </div>
+            </div>
+            <div>
+                <span class="patient-card-label">
+                    Difficulté(s)
+                </span>
+                <br />
+                <div class="patient-card-text-block">
+                    @{
+                        if (ViewBag.Action == modifyingActionName)
+                        {
+                            <textarea class="modify-card-text-area" asp-for="Difficulties" value="@Model.Difficulties"></textarea>
+                        }
+                        else
+                        {
+                            <span class="patient-card-body-text">@Model.Difficulties</span>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        @if (ViewBag.Action == modifyingActionName)
+        {
+            <button class="modify-card-save-modifications-button" type="submit">
+                SAUVEGARDER LES MODIFICATIONS
+            </button>
+        }
+    </form>
+</div>

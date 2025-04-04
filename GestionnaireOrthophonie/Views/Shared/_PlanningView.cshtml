@@ -1,0 +1,134 @@
+﻿@model Dictionary<int,List<Session>>
+
+<div class="planning-header-interactables-container">
+    <form method="get" asp-controller="Planning" asp-action="GetAddSessionPage">
+        <button class="planning-add-session-button" type="submit">
+            AJOUTER
+        </button>
+    </form>
+    <div></div>
+    <select class="planning-view-type-selection" size="1">
+        @{
+            List<NamedPeriod> periodTypes = ViewBag.PeriodTypes;
+            if (periodTypes != null && periodTypes.Count > 0)
+            {
+                foreach (NamedPeriod periodType in periodTypes)
+                {
+                    if (periodType.Name == ViewBag.CurrentPeriodTypeName)
+                    {
+                        <option value="@periodType.WeeksLength" selected>
+                            @periodType.Name
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="@periodType.WeeksLength">
+                            @periodType.Name
+                        </option>
+                    }
+                }
+            }
+        }
+    </select>
+</div>
+<div class="planning-header-arrows-container">
+    <form method="get" asp-controller="Planning" asp-action="GetPreviousPeriodInformation">
+        <button type="submit" class="planning-header-left-arrow">
+            <img src="~/images/left-arrow.png" class="planning-arrow-image" />
+        </button>
+    </form>
+    <form method="get" asp-controller="Planning" asp-action="GetCurrentPeriodInformation">
+        <button type="submit" class="planning-header-current-period-button">
+            MAINTENANT
+        </button>
+    </form>
+    <form method="get" asp-controller="Planning" asp-action="GetNextPeriodInformation">
+        <button type="submit" class="planning-header-right-arrow">
+            <img src="~/images/left-arrow.png" class="planning-arrow-image" />
+        </button>
+    </form>
+</div>
+<div class="planning-body-container">
+    @for (int weekIndex = 0; weekIndex < ViewBag.CurrentPeriodTypeWeeksLength; weekIndex++)
+    {
+        <div class="planning-week-container">
+            <div class="planning-hours-labels-container">
+                @for (int hourIndex = 0; hourIndex < 24; hourIndex++)
+                {
+                    <div class="planning-hour-label-text">
+                        @((hourIndex >= 10 ? "" : "0") + $"{hourIndex}h00")
+                    </div>
+                }
+                <div class="planning-hour-label-text">
+                    00h00
+                </div>
+            </div>
+            <div class="planning-week-body-container">
+                @for (int dayIndex = 0; dayIndex < 7; dayIndex++)
+                {
+                    DateTime dayDate = PeriodsCalculationManager.VisualizedPeriodBorders[0].AddDays(7 * weekIndex + dayIndex);
+                    string dayName = PeriodsCalculationManager.GetFrenchDayName(dayDate.DayOfWeek);
+                    string dayAndMonth = $"{dayDate.Day}/{dayDate.Month}";
+                    string year = dayDate.Year.ToString();
+
+                    <div class="planning-day-container">
+                        <div class="planning-day-header">
+                            <div class="planning-day-header-name">@dayName</div>
+                            <div class="planning-day-header-day-and-month">@dayAndMonth</div>
+                            <div class="planning-day-header-year">@year</div>
+                        </div>
+                        <div class="planning-day-body">
+                            @for (int hourIndex = 0; hourIndex < 24; hourIndex++)
+                            {
+                                string structureHourElementStyle = $"grid-row:{hourIndex + 1}/{hourIndex + 2};";
+
+                                <div class="planning-structure-hour-element" style="@structureHourElementStyle"></div>
+                            }
+                            @foreach (Session session in Model[7 * weekIndex + dayIndex])
+                            {
+                                Dictionary<string, string> sessionCellStylesAndInformation = PeriodsCalculationManager.GetSessionCellStylesAndInformation(session);
+
+                                string cellFormStyle = sessionCellStylesAndInformation["CellFormStyle"];
+                                string bigCellStyle = sessionCellStylesAndInformation["BigCellStyle"];
+                                string patientNameStyle = sessionCellStylesAndInformation["PatientNameStyle"];
+                                string sessionTitleStyle = sessionCellStylesAndInformation["SessionTitleStyle"];
+                                string cellHoursLineGridTemplateStyle = sessionCellStylesAndInformation["CellHoursLineGridTemplateStyle"];
+                                string smallCellStyle = sessionCellStylesAndInformation["SmallCellStyle"];
+                                string startDateHourAndMinute = sessionCellStylesAndInformation["StartDateHourAndMinute"];
+                                string endDateHourAndMinute = sessionCellStylesAndInformation["EndDateHourAndMinute"];
+                                float sessionCellHeight = float.Parse(sessionCellStylesAndInformation["SessionCellHeight"]);
+
+                                <form method="get" class="planning-session-cell-form" style="@cellFormStyle" asp-controller="Planning" asp-action="GetSessionView">
+                                    <input type="hidden" name="sessionId" value="@session.Id" />
+                                    <button type="submit" class="planning-session-cell">
+                                        <span class="planning-session-cell-patient-name" style="@bigCellStyle @patientNameStyle">@session.Patient.FirstName @session.Patient.Name</span>
+                                        @if (sessionCellHeight >= PeriodsCalculationManager.THREE_LINES_CELL_MINIMUM_HEIGHT)
+                                        {
+                                            <span class="planning-session-cell-title" style="@bigCellStyle @sessionTitleStyle">@session.Title</span>
+                                            <div class="planning-session-cell-hour-elements-line" style="@cellHoursLineGridTemplateStyle">
+                                                <span class="planning-session-cell-hour-text" style="@smallCellStyle">@startDateHourAndMinute</span>
+                                                @if (session.EndDate != null)
+                                                {
+                                                    <span class="planning-session-cell-hour-text" style="@smallCellStyle">@("-->")</span>
+                                                    <span class="planning-session-cell-hour-text" style="@smallCellStyle">@endDateHourAndMinute</span>
+                                                }
+                                            </div>
+                                        }
+                                    </button>
+                                </form>
+                            }
+                            @if (dayDate.Day == DateTime.Now.Day && dayDate.Month == DateTime.Now.Month && dayDate.Year == DateTime.Now.Year)
+                            {
+                                string currentTimeLineStyle = PeriodsCalculationManager.GetCurrentTimeLineStyle();
+
+                                <div class="planning-current-time-line" style="@currentTimeLineStyle"></div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+

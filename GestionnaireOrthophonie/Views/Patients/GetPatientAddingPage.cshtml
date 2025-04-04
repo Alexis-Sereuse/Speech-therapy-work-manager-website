@@ -1,0 +1,30 @@
+﻿@model Patient
+
+<div class="add-page-body-container">
+    <span class="add-page-title">
+        AJOUT DE PATIENT
+    </span>
+    <form method="post" asp-controller="Patients" asp-action="AddPatient">
+        <div class="error-text" style="margin-left:35%; margin-right:35%;" asp-validation-summary="All"></div>
+
+        <input type="hidden" asp-for="UserId" value="@ViewBag.UserId" />
+
+        <input class="add-page-input" style="margin-left: 33.2%;" type="text" asp-for="FirstName" placeholder="Prénom" />
+        <input class="add-page-input" style="margin-left: 33.2%;" type="text" asp-for="Name" placeholder="Nom de famille" />
+        <input class="add-page-input" style="margin-left: 33.2%;" type="text" asp-for="Age" placeholder="Age" />
+        <select asp-for="Gender" class="patient-add-page-gender-selection">
+            <option selected value="@null">Sexe</option>
+            <option value="Homme">Homme</option>
+            <option value="Femme">Femme</option>
+        </select>
+
+        <textarea class="add-page-text-area-input" style="margin-left: 14.94%;" asp-for="Anamnesis" placeholder="Anamnèse"></textarea>
+        <textarea class="add-page-text-area-input" style="margin-left: 14.94%;" asp-for="Difficulties" placeholder="Difficultés"></textarea>
+        <textarea class="add-page-text-area-input" style="margin-left: 14.94%;" asp-for="Pathologies" placeholder="Pathologies"></textarea>
+        <textarea class="add-page-text-area-input" style="margin-left: 14.94%;" asp-for="TherapeuticObjectives" placeholder="Objectifs thérapeutiques"></textarea>
+
+        <button class="add-page-add-button" style="margin-left: 44.8%;" type="submit">
+            AJOUTER
+        </button>
+    </form>
+</div>

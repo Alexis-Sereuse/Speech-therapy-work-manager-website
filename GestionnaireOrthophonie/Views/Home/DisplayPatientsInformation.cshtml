@@ -1,0 +1,34 @@
+﻿@model List<Patient>
+
+<div>
+    <form method="get" asp-controller="Patients" asp-action="GetPatientAddingPage">
+        <button class="patient-overview-add-button" type="submit">
+            AJOUTER UN PATIENT
+        </button>
+    </form>
+    <br />
+    @foreach (Patient patient in Model)
+    {
+        <div class="patient-overview-container">
+            <div>
+                <span class="patient-overview-name">
+                    @patient.FirstName @patient.Name
+                </span>
+                <span class="patient-overview-gender">
+                    @patient.Gender
+                </span>
+                <span class="patient-overview-age">
+                    @patient.Age ans
+                </span>
+            </div>
+            <div>
+                <form method="get" asp-controller="Patients" asp-action="DisplayPatientCard">
+                    <input type="hidden" name="patientId" value="@patient.Id" />
+                    <button class="patient-card-acess_button" type="submit">
+                        VOIR
+                    </button>
+                </form>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,100 @@
+﻿.error-text {
+    margin-top: 1%;
+    color: red;
+    font-size: 20px;
+    white-space: pre-wrap;
+}
+
+.add-page-body-container {
+    width: 70.6%;
+    margin-left: 15%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.add-page-title {
+    font-size: 35px;
+    margin: 2% 0% 2% 0%;
+    font-weight: bold;
+}
+
+.add-page-input {
+    margin-bottom: 2%;
+    width: 33.2%;
+    height: 30px;
+    font-size: 20px;
+}
+
+.add-page-text-area-input {
+    margin-bottom: 2%;
+    width: 69.72%;
+    height: 200px;
+    font-size: 20px;
+    font-family: Arial;
+}
+
+.add-page-add-button {
+    width: 10%;
+    height: 30px;
+    font-size: 20px;
+    border-radius: 15px;
+    color: forestgreen;
+    border-width: 2px;
+    border-color: forestgreen;
+    border: solid;
+    background-color: transparent;
+    transition: color 0.2s border-color 0.2s background-color 0.2s;
+}
+
+    .add-page-add-button:hover {
+        color: white;
+        border-color: white;
+        background-color: forestgreen;
+    }
+
+.header-delete-button {
+    padding: 3px 7px 2px 7px;
+    border: solid;
+    border-width: 2px;
+    border-color: red;
+    border-radius: 15px;
+    background-color: transparent;
+    color: red;
+    font-size: 25px;
+    transition: border-color 0.2s background-color 0.2s color 0.2s;
+}
+
+    .header-delete-button:hover {
+        border-color: white;
+        background-color: red;
+        color: white;
+    }
+
+.header-modify-button {
+    padding: 3px 7px 2px 7px;
+    border: solid;
+    border-width: 2px;
+    border-color: blue;
+    border-radius: 15px;
+    background-color: transparent;
+    color: blue;
+    font-size: 25px;
+    transition: border-color 0.2s background-color 0.2s color 0.2s;
+}
+
+    .header-modify-button:hover {
+        border-color: white;
+        background-color: blue;
+        color: white;
+    }
+
+.home-text {
+    font-family: Arial Rounded MT;
+    font-size: 1vw;
+    margin: 5vh 25% 0px 25%;
+    max-width: 70%;
+    text-align: center;
+    line-height: 3vh;
+    white-space: pre-wrap;
+}

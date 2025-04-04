@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\GestionnaireOrthophonie",
+    "\\GestionnaireOrthophonie\\Models",
+    "\\GestionnaireOrthophonie\\Views",
+    "\\GestionnaireOrthophonie\\Views\\Shared"
+  ],
+  "SelectedNode": "\\GestionnaireOrthophonie\\Models\\PeriodsCalculationManager.cs",
+  "PreviewInSolutionExplorer": false
+}
